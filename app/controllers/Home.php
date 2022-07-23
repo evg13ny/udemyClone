@@ -2,20 +2,11 @@
 
 // Home class
 
-class Home
+class Home extends Controller
 {
     public function index()
     {
-        echo "home view page";
-    }
-
-    public function edit()
-    {
-        echo "home editing";
-    }
-
-    public function delete()
-    {
-        echo "home deleting";
+        $data['title'] = "Home";
+        $this->view('home', $data);
     }
 }
