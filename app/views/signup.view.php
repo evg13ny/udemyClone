@@ -66,19 +66,19 @@
                   <form method="POST" class="row g-3 needs-validation" novalidate>
                     <div class="col-6">
                       <label for="yourName" class="form-label">First Name</label>
-                      <input type="text" name="firstname" class="form-control" id="yourName" required1>
+                      <input value="<?= set_value('firstname') ?>" type="text" name="firstname" class="form-control" id="yourName" required1>
                       <div class="invalid-feedback">Please, enter your first name!</div>
                     </div>
 
                     <div class="col-6">
                       <label for="yourName2" class="form-label">Last Name</label>
-                      <input type="text" name="lastname" class="form-control" id="yourName2" required1>
+                      <input value="<?= set_value('lastname') ?>" type="text" name="lastname" class="form-control" id="yourName2" required1>
                       <div class="invalid-feedback">Please, enter your last name!</div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Your Email</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required1>
+                      <input value="<?= set_value('email') ?>" type="email" name="email" class="form-control" id="yourEmail" required1>
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
 
@@ -96,7 +96,7 @@
 
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" name="terms" type="checkbox" value="1" id="acceptTerms" required1>
+                        <input <?= set_value('terms') ? 'checked' : ''; ?> class="form-check-input" name="terms" type="checkbox" value="1" id="acceptTerms" required1>
                         <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
                         <div class="invalid-feedback">You must agree before submitting.</div>
                       </div>
