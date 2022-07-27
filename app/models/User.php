@@ -28,11 +28,9 @@ class User extends Model
             $this->errors['lastname'] = "Last name is required";
         }
 
-        $query = "SELECT * FROM `users` WHERE email = :email LIMIT 1";
-
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = "Email is not valid";
-        } elseif ($this->query($query, ['email' => $data['email']])) {
+        } elseif ($this->where(['email' => $data['email']])) {
             $this->errors['email'] = "This email already exists";
         }
 

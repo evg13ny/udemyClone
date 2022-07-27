@@ -19,12 +19,32 @@ class Model extends Database
 
         // prepare query
         $keys = array_keys($data);
-        $values = array_values($data);
 
-        $query = "INSERT INTO " . $this->table;
-        $query .= " (" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
+        $query = "INSERT INTO `" . $this->table;
+        $query .= "` (" . implode(",", $keys) . ") VALUES (:" . implode(",:", $keys) . ")";
 
         // run query
         $this->query($query, $data);
+    }
+
+    public function where($data)
+    {
+        $keys = array_keys($data);
+
+        $query = "SELECT * FROM `" . $this->table . "` WHERE ";
+
+        foreach ($keys as $key) {
+            $query .= $key . " = :" . $key . " && ";
+        }
+
+        $query = trim($query, " && ");
+
+        $res = $this->query($query, $data);
+
+        if (is_array($res)) {
+            return $res;
+        }
+
+        return false;
     }
 }
