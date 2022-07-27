@@ -63,6 +63,10 @@
                     <p class="text-center small">Enter your username & password to login</p>
                   </div>
 
+                  <?php if(message()): ?>
+                    <div class="alert alert-success text-center"><?= message('', true) ?></div>
+                  <?php endif; ?>
+
                   <form class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">

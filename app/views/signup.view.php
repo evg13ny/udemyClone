@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Register - NiceAdmin Bootstrap Template</title>
+  <title>Register - <?= APP_NAME ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -66,20 +66,28 @@
                   <form method="POST" class="row g-3 needs-validation" novalidate>
                     <div class="col-6">
                       <label for="yourName" class="form-label">First Name</label>
-                      <input value="<?= set_value('firstname') ?>" type="text" name="firstname" class="form-control" id="yourName" required1>
+                      <input value="<?= set_value('firstname') ?>" type="text" name="firstname" class="form-control <?= !empty($errors['firstname']) ? 'border-danger' : '' ?>" id="yourName" required1>
                       <div class="invalid-feedback">Please, enter your first name!</div>
+
+                      <?php if(!empty($errors['firstname'])): ?>
+                        <small class="text-danger"><?= $errors['firstname'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="col-6">
                       <label for="yourName2" class="form-label">Last Name</label>
-                      <input value="<?= set_value('lastname') ?>" type="text" name="lastname" class="form-control" id="yourName2" required1>
+                      <input value="<?= set_value('lastname') ?>" type="text" name="lastname" class="form-control <?= !empty($errors['lastname']) ? 'border-danger' : '' ?>" id="yourName2" required1>
                       <div class="invalid-feedback">Please, enter your last name!</div>
+
+                      <?php if(!empty($errors['lastname'])): ?>
+                        <small class="text-danger"><?= $errors['lastname'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Your Email</label>
                       <input value="<?= set_value('email') ?>" type="email" name="email" class="form-control <?= !empty($errors['email']) ? 'border-danger' : '' ?>" id="yourEmail" required1>
-                      <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                      <div class="invalid-feedback">Please enter a valid email adddress!</div>
 
                       <?php if(!empty($errors['email'])): ?>
                         <small class="text-danger"><?= $errors['email'] ?></small>
@@ -88,21 +96,33 @@
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required1>
+                      <input type="password" name="password" class="form-control <?= !empty($errors['password']) ? 'border-danger' : '' ?>" id="yourPassword" required1>
                       <div class="invalid-feedback">Please enter your password!</div>
+
+                      <?php if(!empty($errors['password'])): ?>
+                        <small class="text-danger"><?= $errors['password'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Retype Password</label>
-                      <input type="password" name="retype_password" class="form-control" id="yourPassword" required1>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <input type="password" name="retype_password" class="form-control <?= !empty($errors['retype_password']) ? 'border-danger' : '' ?>" id="yourPassword" required1>
+                      <div class="invalid-feedback">Please retype your password!</div>
+
+                      <?php if(!empty($errors['retype_password'])): ?>
+                        <small class="text-danger"><?= $errors['retype_password'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="col-12">
                       <div class="form-check">
-                        <input <?= set_value('terms') ? 'checked' : ''; ?> class="form-check-input" name="terms" type="checkbox" value="1" id="acceptTerms" required1>
+                        <input <?= set_value('terms') ? 'checked' : ''; ?> class="form-check-input <?= !empty($errors['terms']) ? 'border-danger' : '' ?>" name="terms" type="checkbox" value="1" id="acceptTerms" required1>
                         <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
                         <div class="invalid-feedback">You must agree before submitting.</div>
+
+                        <?php if(!empty($errors['terms'])): ?>
+                        <small class="text-danger"><?= $errors['terms'] ?></small>
+                      <?php endif; ?>
                       </div>
                     </div>
                     <div class="col-12">
