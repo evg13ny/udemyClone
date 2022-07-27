@@ -13,6 +13,7 @@ class Signup extends Controller
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($user->validate($_POST)) {
                 $_POST['date'] = date("Y-m-d H:i:s");
+                $_POST['role'] = "user";
                 $user->insert($_POST);
 
                 message("Your profile was successfully created");
