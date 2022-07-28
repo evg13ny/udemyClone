@@ -83,7 +83,7 @@
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input value="<?= set_value('password') ?>" type="password" name="password" class="form-control" id="yourPassword" required1>
+                      <input type="password" name="password" class="form-control" id="yourPassword" required1>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
