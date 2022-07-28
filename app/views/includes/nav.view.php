@@ -34,8 +34,12 @@
           <li><a href="<?= ROOT ?>/about">About</a></li>
           <li><a href="<?= ROOT ?>/contact">Contact</a></li>
 
-          <li><a href="<?= ROOT ?>/login">Login</a></li>
-          <li><a href="<?= ROOT ?>/signup">Signup</a></li>
+          <?php if(!Auth::logged_in()): ?>
+            <li><a href="<?= ROOT ?>/login">Login</a></li>
+            <li><a href="<?= ROOT ?>/signup">Signup</a></li>
+          <?php else: ?>
+            <li><a href="<?= ROOT ?>/logout">Logout</a></li>
+          <?php endif; ?>
 
         </ul>
       </nav><!-- .navbar -->
