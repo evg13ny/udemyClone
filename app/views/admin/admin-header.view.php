@@ -304,16 +304,16 @@
       </li><!-- End Contact Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
+        <a class="nav-link collapsed" href="<?= ROOT ?>/admin/courses">
+          <i class="bi bi-film"></i>
+          <span>Courses</span>
         </a>
       </li><!-- End Register Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
+        <a class="nav-link collapsed" href="<?= ROOT ?>">
+          <i class="bi bi-globe"></i>
+          <span>Home</span>
         </a>
       </li><!-- End Login Page Nav -->
 
@@ -334,3 +334,5 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+
+<main id="main" class="main">
