@@ -254,7 +254,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="<?= ROOT ?>/logout">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -290,46 +290,39 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed" href="<?= ROOT ?>/admin/courses">
           <i class="bi bi-film"></i>
-          <span>Courses</span>
+          <span>My Courses</span>
         </a>
-      </li><!-- End Register Page Nav -->
+      </li><!-- End My Courses Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= ROOT ?>/admin/lessons">
+          <i class="bi bi-person-video3"></i>
+          <span>Enrolled Courses</span>
+        </a>
+      </li><!-- End Enrolled Courses Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= ROOT ?>/admin/history">
+          <i class="bi bi-hourglass-split"></i>
+          <span>Watch History</span>
+        </a>
+      </li><!-- End Watch History Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= ROOT ?>/admin/sales">
+          <i class="bi bi-cash-coin"></i>
+          <span>Sales</span>
+        </a>
+      </li><!-- End Sales Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="<?= ROOT ?>">
           <i class="bi bi-globe"></i>
           <span>Home</span>
         </a>
-      </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
+      </li><!-- End Home Page Nav -->
 
     </ul>
 
