@@ -20,7 +20,7 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="<?= ROOT ?>/niceadmin/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+              <img src="<?= ROOT ?>/<?= $row->image ?>" alt="Profile" class="rounded-circle">
               <h2><?= esc($row->firstname) ?> <?= esc($row->lastname) ?></h2>
               <h3><?= esc($row->role) ?></h3>
               <div class="social-links mt-2">
@@ -42,19 +42,19 @@
               <ul class="nav nav-tabs nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                  <button onclick="set_tab(this.getAttribute('data-bs-target'))" class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview" id="profile-overview-tab">Overview</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                  <button onclick="set_tab(this.getAttribute('data-bs-target'))" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" id="profile-edit-tab">Edit Profile</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+                  <button onclick="set_tab(this.getAttribute('data-bs-target'))" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" id="profile-settings-tab">Settings</button>
                 </li>
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                  <button onclick="set_tab(this.getAttribute('data-bs-target'))" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" id="profile-change-password-tab">Change Password</button>
                 </li>
 
               </ul>
@@ -112,13 +112,12 @@
                       <div class="col-md-8 col-lg-9">
 
                       <div class="d-flex">
-                        <img class="js-image-preview" src="<?= ROOT ?>/niceadmin/assets/img/profile-img.jpg" alt="Profile" style="width:200px;max-width:200px;height:200px;object-fit:cover">
+                        <img class="js-image-preview" src="<?= ROOT ?>/<?= $row->image ?>" alt="Profile" style="width:200px;max-width:200px;height:200px;object-fit:cover">
                         <div class="js-filename m-2">Selected File: None</div>
                       </div>
 
                         <div class="pt-2">
                           <label href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload text-white"></i><input onchange="load_image(this.files[0])" type="file" name="image" style="display: none;"></label>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
                     </div>
@@ -128,6 +127,10 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="firstname" type="text" class="form-control" id="firstname" value="<?= set_value('firstname', $row->firstname) ?>">
                       </div>
+
+                      <?php if(!empty($errors['firstname'])): ?>
+                        <small class="text-danger"><?= $errors['firstname'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
@@ -135,6 +138,10 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="lastname" type="text" class="form-control" id="lastname" value="<?= set_value('lastname', $row->lastname) ?>">
                       </div>
+
+                      <?php if(!empty($errors['lastname'])): ?>
+                        <small class="text-danger"><?= $errors['lastname'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
@@ -177,6 +184,10 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="phone" type="text" class="form-control" id="Phone" value="<?= set_value('phone', $row->phone) ?>">
                       </div>
+
+                      <?php if(!empty($errors['phone'])): ?>
+                        <small class="text-danger"><?= $errors['phone'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
@@ -184,34 +195,54 @@
                       <div class="col-md-8 col-lg-9">
                         <input name="email" type="email" class="form-control" id="Email" value="<?= set_value('email', $row->email) ?>">
                       </div>
+
+                      <?php if(!empty($errors['email'])): ?>
+                        <small class="text-danger"><?= $errors['email'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                        <input name="twitter_link" type="text" class="form-control" id="Twitter" value="<?= set_value('twitter_link', $row->twitter_link) ?>">
                       </div>
+
+                      <?php if(!empty($errors['twitter_link'])): ?>
+                        <small class="text-danger"><?= $errors['twitter_link'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                        <input name="facebook_link" type="text" class="form-control" id="Facebook" value="<?= set_value('facebook_link', $row->facebook_link) ?>">
                       </div>
+
+                      <?php if(!empty($errors['facebook_link'])): ?>
+                        <small class="text-danger"><?= $errors['facebook_link'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                        <input name="instagram_link" type="text" class="form-control" id="Instagram" value="<?= set_value('instagram_link', $row->instagram_link) ?>">
                       </div>
+
+                      <?php if(!empty($errors['instagram_link'])): ?>
+                        <small class="text-danger"><?= $errors['instagram_link'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                        <input name="linkedin_link" type="text" class="form-control" id="Linkedin" value="<?= set_value('linkedin_link', $row->linkedin_link) ?>">
                       </div>
+
+                      <?php if(!empty($errors['linkedin_link'])): ?>
+                        <small class="text-danger"><?= $errors['linkedin_link'] ?></small>
+                      <?php endif; ?>
                     </div>
 
                     <div class="text-center">
@@ -318,11 +349,29 @@
 
 <script>
 
+  var tab = sessionStorage.getItem('tab') ? sessionStorage.getItem('tab') : "#profile-overview";
+
+  function show_tab(tab_name) {
+    const someTabTriggerEl = document.querySelector(tab_name + "-tab");
+    const tab = new bootstrap.Tab(someTabTriggerEl);
+
+    tab.show();
+  }
+
+  function set_tab(tab_name) {
+    tab = tab_name;
+    sessionStorage.setItem('tab', tab_name);
+  }
+
   function load_image(file) {
     document.querySelector(".js-filename").innerHTML = "Selected File: " + file.name;
 
     var mylink = window.URL.createObjectURL(file);
     document.querySelector(".js-image-preview").src = mylink;
+  }
+
+  window.onload = function() {
+    show_tab(tab);
   }
 
 </script>
