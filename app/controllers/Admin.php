@@ -42,6 +42,7 @@ class Admin extends Controller
                         if (in_array($_FILES['image']['type'], $allowed)) {
                             $destination = $folder . time() . $_FILES['image']['name'];
                             move_uploaded_file($_FILES['image']['tmp_name'], $destination);
+                            resize_image($destination);
                             $_POST['image'] = $destination;
 
                             if (file_exists($row->image)) {
