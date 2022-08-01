@@ -117,7 +117,7 @@
                       </div>
 
                         <div class="pt-2">
-                          <label href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload text-white"></i><input onchange="load_image(this.files[0])" type="file" name="image" style="display: none;"></label>
+                          <label href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload text-white"></i><input class="js-profile-image-input" onchange="load_image(this.files[0])" type="file" name="image" style="display: none;"></label>
                         </div>
                       </div>
                     </div>
@@ -245,11 +245,15 @@
                       <?php endif; ?>
                     </div>
 
+                    <div class="js-prog progress my-4 hide">
+                      <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">Saving.. 50%</div>
+                    </div>
+
                     <div class="text-center">
                       <a href="<?= ROOT ?>/admin">
                         <button type="button" class="btn btn-danger float-start">Back</button>
                       </a>
-                      <button type="submit" class="btn btn-primary float-end">Save Changes</button>
+                      <button type="button" onclick="save_profile()" type="submit" class="btn btn-primary float-end">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -372,6 +376,62 @@
 
   window.onload = function() {
     show_tab(tab);
+  }
+
+  // upload function
+
+  function save_profile() {
+    var image = document.querySelector(".js-profile-image-input");
+    var allowed = ['jpg','jpeg','png'];
+
+    if(typeof image.files[0] == 'object') {
+      var ext = image.files[0].name.split(".").pop();
+    }
+
+    if(!allowed.includes(ext.toLowerCase())) {
+      alert("Wrong file's type. File must be: " + allowed.toString(","));
+      return;
+    }
+
+    send_data({
+      pic:image.files[0]
+    });
+  }
+
+  function send_data(obj, progbar = "js-prog") {
+    var prog = document.querySelector("." + progbar);
+    prog.children[0].style.width = "0%";
+    prog.classList.remove("hide");
+
+    var myform = new FormData();
+
+    for(key in obj) {
+      myform.append(key, obj[key]);
+    }
+
+    var ajax = new XMLHttpRequest();
+    
+    ajax.addEventListener('readystatechange', function() {
+      if(ajax.readyState == 4) {
+        if(ajax.status == 200) {
+          // everything went well
+          alert("Upload completed");
+          // window.location.reload();
+        } else {
+          // server returned an error
+          alert("Error");
+        }
+      }
+    });
+
+    ajax.upload.addEventListener('progress', function(e) {
+      var percent = Math.round(e.loaded / e.total * 100);
+      prog.children[0].style.width = percent + "%";
+      prog.children[0].innerHTML = "Saving.. " + percent + "%";
+    });
+
+    ajax.open('POST', '', true);
+    ajax.send(myform);
   }
 
 </script>
