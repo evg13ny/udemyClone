@@ -57,9 +57,21 @@ class Admin extends Controller
                 }
 
                 $user->update($id, $_POST);
-                message("Profile updated");
-                redirect('admin/profile/' . $id);
+
+                // message("Profile updated");
+                // redirect('admin/profile/' . $id);
             }
+
+            if (empty($user->errors)) {
+                $arr['message'] = "Profile updated";
+            } else {
+                $arr['message'] = "Please check your data";
+                $arr['errors'] = $user->errors;
+            }
+
+            echo json_encode($arr);
+
+            die;
         }
 
         $data['errors'] = $user->errors;

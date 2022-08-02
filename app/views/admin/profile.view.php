@@ -118,6 +118,12 @@
 
                         <div class="pt-2">
                           <label href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload text-white"></i><input class="js-profile-image-input" onchange="load_image(this.files[0])" type="file" name="image" style="display: none;"></label>
+
+                          <?php if(!empty($errors['image'])): ?>
+                            <small class="js-error-image text-danger"><?= $errors['image'] ?></small>                            
+                          <?php endif; ?>
+                          <small class="js-error-image text-danger"></small>
+                        
                         </div>
                       </div>
                     </div>
@@ -125,23 +131,25 @@
                     <div class="row mb-3">
                       <label for="firstname" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="firstname" type="text" class="form-control" id="firstname" value="<?= set_value('firstname', $row->firstname) ?>">
+                        <input name="firstname" type="text" class="form-control" id="firstname" value="<?= set_value('firstname', $row->firstname) ?>" required>
                       </div>
 
                       <?php if(!empty($errors['firstname'])): ?>
-                        <small class="text-danger"><?= $errors['firstname'] ?></small>
+                        <small class="js-error-firstname text-danger"><?= $errors['firstname'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-firstname text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
                       <label for="lastname" class="col-md-4 col-lg-3 col-form-label">Last Name</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="lastname" type="text" class="form-control" id="lastname" value="<?= set_value('lastname', $row->lastname) ?>">
+                        <input name="lastname" type="text" class="form-control" id="lastname" value="<?= set_value('lastname', $row->lastname) ?>" required>
                       </div>
 
                       <?php if(!empty($errors['lastname'])): ?>
-                        <small class="text-danger"><?= $errors['lastname'] ?></small>
+                        <small class="js-error-lastname text-danger"><?= $errors['lastname'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-lastname text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
@@ -186,19 +194,21 @@
                       </div>
 
                       <?php if(!empty($errors['phone'])): ?>
-                        <small class="text-danger"><?= $errors['phone'] ?></small>
+                        <small class="js-error-phone text-danger"><?= $errors['phone'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-phone text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="<?= set_value('email', $row->email) ?>">
+                        <input name="email" type="email" class="form-control" id="Email" value="<?= set_value('email', $row->email) ?>" required>
                       </div>
 
                       <?php if(!empty($errors['email'])): ?>
-                        <small class="text-danger"><?= $errors['email'] ?></small>
+                        <small class="js-error-email text-danger"><?= $errors['email'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-email text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
@@ -208,8 +218,9 @@
                       </div>
 
                       <?php if(!empty($errors['twitter_link'])): ?>
-                        <small class="text-danger"><?= $errors['twitter_link'] ?></small>
+                        <small class="js-error-twitter_link text-danger"><?= $errors['twitter_link'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-twitter_link text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
@@ -219,8 +230,9 @@
                       </div>
 
                       <?php if(!empty($errors['facebook_link'])): ?>
-                        <small class="text-danger"><?= $errors['facebook_link'] ?></small>
+                        <small class="js-error-facebook_link text-danger"><?= $errors['facebook_link'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-facebook_link text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
@@ -230,8 +242,9 @@
                       </div>
 
                       <?php if(!empty($errors['instagram_link'])): ?>
-                        <small class="text-danger"><?= $errors['instagram_link'] ?></small>
+                        <small class="js-error-instagram_link text-danger"><?= $errors['instagram_link'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-instagram_link text-danger"></small>
                     </div>
 
                     <div class="row mb-3">
@@ -241,8 +254,9 @@
                       </div>
 
                       <?php if(!empty($errors['linkedin_link'])): ?>
-                        <small class="text-danger"><?= $errors['linkedin_link'] ?></small>
+                        <small class="js-error-linkedin_link text-danger"><?= $errors['linkedin_link'] ?></small>
                       <?php endif; ?>
+                      <small class="js-error-linkedin_link text-danger"></small>
                     </div>
 
                     <div class="js-prog progress my-4 hide">
@@ -253,7 +267,7 @@
                       <a href="<?= ROOT ?>/admin">
                         <button type="button" class="btn btn-danger float-start">Back</button>
                       </a>
-                      <button type="button" onclick="save_profile()" type="submit" class="btn btn-primary float-end">Save Changes</button>
+                      <button type="button" onclick="save_profile(event)" type="submit" class="btn btn-primary float-end">Save Changes</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
@@ -380,22 +394,39 @@
 
   // upload function
 
-  function save_profile() {
-    var image = document.querySelector(".js-profile-image-input");
-    var allowed = ['jpg','jpeg','png'];
+  function save_profile(e) {
+    var form = e.currentTarget.form;
+    var inputs = document.querySelectorAll("input,textarea");
+    var obj = {};
+    var image_added = false;
 
-    if(typeof image.files[0] == 'object') {
-      var ext = image.files[0].name.split(".").pop();
+    for (var i = 0; i < inputs.length; i++) {
+      var key = inputs[i].name;
+
+      if(key == "image") {
+        if(typeof inputs[i].files[0] == 'object') {
+          obj[key] = inputs[i].files[0];
+          image_added = true;
+        }
+      } else {
+        obj[key] = inputs[i].value;
+      }   
     }
 
-    if(!allowed.includes(ext.toLowerCase())) {
-      alert("Wrong file's type. File must be: " + allowed.toString(","));
-      return;
+    if(image_added) {
+      var allowed = ['jpg','jpeg','png'];
+
+      if(typeof obj.image == 'object') {
+        var ext = obj.image.name.split(".").pop();
+      }
+
+      if(!allowed.includes(ext.toLowerCase())) {
+        alert("Wrong file's type. File must be: " + allowed.toString(","));
+        return;
+      }
     }
 
-    send_data({
-      pic:image.files[0]
-    });
+    send_data(obj);
   }
 
   function send_data(obj, progbar = "js-prog") {
@@ -415,8 +446,8 @@
       if(ajax.readyState == 4) {
         if(ajax.status == 200) {
           // everything went well
-          alert("Upload completed");
-          // window.location.reload();
+          // alert("Upload completed");
+          handle_result(ajax.responseText);
         } else {
           // server returned an error
           alert("Error");
@@ -432,6 +463,30 @@
 
     ajax.open('POST', '', true);
     ajax.send(myform);
+  }
+
+  function handle_result(result) {
+    var obj = JSON.parse(result);
+
+    if(typeof obj == "object") {
+      // object was created
+
+      if(typeof obj.errors == "object") {
+        // errors
+        display_errors(obj.errors);
+        alert("Please correct errors");
+      } else {
+        // save complete
+        alert("Profile updated!");
+        window.location.reload();
+      }
+    }
+  }
+
+  function display_errors(errors) {
+    for (key in errors) {console.log(".js-error-" + key);
+      document.querySelector(".js-error-" + key).innerHTML = errors[key];
+    }
   }
 
 </script>
