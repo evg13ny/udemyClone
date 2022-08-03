@@ -15,13 +15,17 @@ class Admin extends Controller
         $this->view('admin/dashboard', $data);
     }
 
-    public function courses($id = null) {
+    public function courses($action = null, $id = null)
+    {
         if (!Auth::logged_in()) {
             message("Please log in");
             redirect('login');
         }
 
         $data = [];
+        $data['action'] = $action;
+        $data['id'] = $id;
+
         $this->view('admin/courses', $data);
     }
 
