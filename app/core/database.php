@@ -58,5 +58,40 @@ class Database
         ";
 
         $this->query($query);
+
+        // courses table
+        $query = "
+        CREATE TABLE `courses` (
+            `id` int(11) NOT NULL AUTO_INCREMENT,
+            `title` varchar(100) NOT NULL,
+            `description` text DEFAULT NULL,
+            `user_id` int(11) NOT NULL,
+            `category_id` int(11) NOT NULL,
+            `sub_category_id` int(11) DEFAULT NULL,
+            `level_id` int(11) DEFAULT NULL,
+            `language_id` int(11) DEFAULT NULL,
+            `price_id` int(11) DEFAULT NULL,
+            `promo_link` varchar(1024) DEFAULT NULL,
+            `course_image` varchar(1024) DEFAULT NULL,
+            `course_promo_video` varchar(1024) DEFAULT NULL,
+            `primary_subject` varchar(100) DEFAULT NULL,
+            `date` datetime DEFAULT NULL,
+            `tags` varchar(2048) DEFAULT NULL,
+            `congratulations_message` varchar(2048) DEFAULT NULL,
+            `welcome_message` varchar(2048) DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `title` (`title`),
+            KEY `user_id` (`user_id`),
+            KEY `category_id` (`category_id`),
+            KEY `sub_category_id` (`sub_category_id`),
+            KEY `level_id` (`level_id`),
+            KEY `language_id` (`language_id`),
+            KEY `price_id` (`price_id`),
+            KEY `primary_subject` (`primary_subject`),
+            KEY `date` (`date`)
+           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        ";
+
+        $this->query($query);
     }
 }
