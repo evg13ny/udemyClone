@@ -34,13 +34,13 @@ class User extends Model
 
         if (empty($data['firstname'])) {
             $this->errors['firstname'] = "First name is required";
-        } elseif (!preg_match("/^[a-zA-Z-. ]+$/", trim($data['firstname']))) {
+        } elseif (!preg_match("/^[a-zA-Z \-\.]+$/", trim($data['firstname']))) {
             $this->errors['firstname'] = "Wrong letters!";
         }
 
         if (empty($data['lastname'])) {
             $this->errors['lastname'] = "Last name is required";
-        } elseif (!preg_match("/^[a-zA-Z- ]+$/", trim($data['lastname']))) {
+        } elseif (!preg_match("/^[a-zA-Z \-]+$/", trim($data['lastname']))) {
             $this->errors['lastname'] = "Wrong letters!";
         }
 
@@ -75,13 +75,13 @@ class User extends Model
 
         if (empty($data['firstname'])) {
             $this->errors['firstname'] = "First name is required";
-        } elseif (!preg_match("/^[a-zA-Z-. ]+$/", trim($data['firstname']))) {
+        } elseif (!preg_match("/^[a-zA-Z \-\.]+$/", trim($data['firstname']))) {
             $this->errors['firstname'] = "Wrong letters!";
         }
 
         if (empty($data['lastname'])) {
             $this->errors['lastname'] = "Last name is required";
-        } elseif (!preg_match("/^[a-zA-Z- ]+$/", trim($data['lastname']))) {
+        } elseif (!preg_match("/^[a-zA-Z \-]+$/", trim($data['lastname']))) {
             $this->errors['lastname'] = "Wrong letters!";
         }
 
@@ -96,7 +96,7 @@ class User extends Model
         }
 
         if (!empty($data['phone'])) {
-            if (!preg_match("/^[0-9-+() ]+$/", trim($data['phone']))) {
+            if (!preg_match("/^[0-9 \-\+\(\)]+$/", trim($data['phone']))) {
                 $this->errors['phone'] = "Phone number is not valid";
             }
         }
